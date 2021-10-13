@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MailgunAdapterFactory.php
  *
@@ -34,6 +35,6 @@ class MailgunAdapterFactory implements FactoryInterface
         /** @var EmailToolsConfig $config */
         $config = $container->get(EmailToolsConfig::class);
 
-        return new MailgunAdapter($config->getMailgunApiKey());
+        return new MailgunAdapter($config->getMailgunApiKey(), $config->getMailgunDomain());
     }
 }

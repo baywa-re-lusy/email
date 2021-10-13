@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EmailService.php
  *
@@ -13,6 +14,7 @@
 namespace BayWaReLusy\Tools\Queue;
 
 use BayWaReLusy\EmailTools\Adapter\EmailAdapterInterface;
+use Exception;
 
 /**
  * Class EmailService
@@ -26,7 +28,7 @@ use BayWaReLusy\EmailTools\Adapter\EmailAdapterInterface;
  */
 class EmailService
 {
-    protected EmailAdapterInterface $adapter;
+    protected ?EmailAdapterInterface $adapter = null;
 
     /**
      * Set the adapter.
@@ -41,12 +43,19 @@ class EmailService
     }
 
     /**
-     * Return the adapter.
+     * Send a message.
      *
-     * @return EmailAdapterInterface
+     * @param array $to
+     * @param string $subject
+     * @param string $message
+     * @throws Exception
      */
-    public function getAdapter(): EmailAdapterInterface
+    public function sendMessage(array $to, string $subject, string $message): void
     {
-        return $this->adapter;
+        if (!$this->adapter) {
+            throw new Exception('Adapter not set.');
+        }
+
+        $this->adapter->sendMessage($to, $subject, $message);
     }
 }

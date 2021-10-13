@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MailgunAdapter.php
  *
@@ -26,17 +27,40 @@ use Mailgun\Mailgun;
 class MailgunAdapter implements EmailAdapterInterface
 {
     protected string $apiKey;
+    protected string $domain;
+    protected ?Mailgun $mailgunClient = null;
 
     /**
      * @param string $apiKey Mailgun API Key
+     * @param string $domain Mailgun Domain
      */
-    public function __construct(string $apiKey)
+    public function __construct(string $apiKey, string $domain)
     {
         $this->apiKey = $apiKey;
+        $this->domain = $domain;
     }
 
     protected function getMailgunClient(): Mailgun
     {
-        return Mailgun::create($this->apiKey, 'https://api.eu.mailgun.net');
+        if (!$this->mailgunClient) {
+            $this->mailgunClient = Mailgun::create($this->apiKey, 'https://api.eu.mailgun.net');
+        }
+        return $this->mailgunClient;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendMessage(array $to, string $subject, string $message): void
+    {
+        $this->getMailgunClient()->messages()->send(
+            $this->domain,
+            [
+                'from'    => 'no-reply@' . $this->domain,
+                'to'      => $to,
+                'subject' => $subject,
+                'text'    => $message,
+            ]
+        );
     }
 }

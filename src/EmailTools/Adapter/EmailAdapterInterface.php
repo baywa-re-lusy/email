@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EmailAdapterInterface.php
  *
@@ -24,4 +25,12 @@ namespace BayWaReLusy\EmailTools\Adapter;
  */
 interface EmailAdapterInterface
 {
+    /**
+     * Send a message with the given parameters.
+     *
+     * @param string[] $to
+     * @param string $subject
+     * @param string $message
+     */
+    public function sendMessage(array $to, string $subject, string $message): void;
 }

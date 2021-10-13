@@ -26,13 +26,16 @@ namespace BayWaReLusy\EmailTools;
 class EmailToolsConfig
 {
     protected string $mailgunApiKey;
+    protected string $mailgunDomain;
 
     /**
      * @param string $mailgunApiKey
+     * @param string $mailgunDomain
      */
-    public function __construct(string $mailgunApiKey)
+    public function __construct(string $mailgunApiKey, string $mailgunDomain)
     {
         $this->mailgunApiKey = $mailgunApiKey;
+        $this->mailgunDomain = $mailgunDomain;
     }
 
     /**
@@ -41,5 +44,13 @@ class EmailToolsConfig
     public function getMailgunApiKey(): string
     {
         return $this->mailgunApiKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMailgunDomain(): string
+    {
+        return $this->mailgunDomain;
     }
 }
