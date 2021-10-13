@@ -13,8 +13,7 @@ jobs:
       - run:
           name: Composer install
           command: |
-            ls -al
-            ./composer.phar install -n
+            ./composer.phar update -n
       - run:
           name: PHPStan
           command: |
