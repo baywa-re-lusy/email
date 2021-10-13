@@ -13,6 +13,8 @@
 
 namespace BayWaReLusy\EmailTools\Adapter;
 
+use BayWaReLusy\EmailTools\EmailAttachment;
+
 /**
  * EmailAdapterInterface
  *
@@ -31,6 +33,7 @@ interface EmailAdapterInterface
      * @param string[] $to
      * @param string $subject
      * @param string $message
+     * @param EmailAttachment[]
      */
-    public function sendMessage(array $to, string $subject, string $message): void;
+    public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void;
 }

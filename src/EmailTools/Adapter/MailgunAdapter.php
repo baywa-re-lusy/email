@@ -13,6 +13,7 @@
 
 namespace BayWaReLusy\EmailTools\Adapter;
 
+use BayWaReLusy\EmailTools\EmailAttachment;
 use Mailgun\Mailgun;
 
 /**
@@ -54,16 +55,31 @@ class MailgunAdapter implements EmailAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function sendMessage(array $to, string $subject, string $message): void
+    public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void
     {
-        $this->getMailgunClient()->messages()->send(
-            $this->domain,
+        $email =
             [
                 'from'    => 'no-reply@' . $this->domain,
                 'to'      => $to,
                 'subject' => $subject,
                 'text'    => $message,
-            ]
-        );
+            ];
+
+        $mailgunAttachments = [];
+
+        /** @var EmailAttachment $attachment */
+        foreach ($attachments as $attachment) {
+            $mailgunAttachments[] =
+                [
+                    'fileContent' => $attachment->getData(),
+                    'filename'    => $attachment->getFilename()
+                ];
+        }
+
+        if (!empty($mailgunAttachments)) {
+            $email['attachment'] = $mailgunAttachments;
+        }
+
+        $this->getMailgunClient()->messages()->send($this->domain, $email);
     }
 }
