@@ -33,7 +33,7 @@ interface EmailAdapterInterface
      * @param string[] $to
      * @param string $subject
      * @param string $message
-     * @param EmailAttachment[]
+     * @param EmailAttachment[] $attachments
      */
     public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void;
 }

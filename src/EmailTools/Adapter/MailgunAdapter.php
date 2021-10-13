@@ -67,7 +67,6 @@ class MailgunAdapter implements EmailAdapterInterface
 
         $mailgunAttachments = [];
 
-        /** @var EmailAttachment $attachment */
         foreach ($attachments as $attachment) {
             $mailgunAttachments[] =
                 [
