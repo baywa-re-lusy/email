@@ -1,6 +1,6 @@
 <?php
 
-use BayWaReLusy\Tools\Queue\EmailService;
+use BayWaReLusy\EmailTools\EmailService;
 use BayWaReLusy\EmailTools\Adapter\MailgunAdapter;
 use BayWaReLusy\EmailTools\Adapter\MailgunAdapterFactory;
 

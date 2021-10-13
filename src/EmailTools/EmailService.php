@@ -11,7 +11,7 @@
  *            prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\Tools\Queue;
+namespace BayWaReLusy\EmailTools;
 
 use BayWaReLusy\EmailTools\Adapter\EmailAdapterInterface;
 use Exception;
