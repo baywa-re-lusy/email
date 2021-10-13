@@ -14,6 +14,7 @@
 namespace BayWaReLusy\EmailTools\Adapter;
 
 use BayWaReLusy\EmailTools\EmailAttachment;
+use BayWaReLusy\EmailTools\EmailException;
 use Mailgun\Mailgun;
 
 /**
@@ -79,6 +80,10 @@ class MailgunAdapter implements EmailAdapterInterface
             $email['attachment'] = $mailgunAttachments;
         }
 
-        $this->getMailgunClient()->messages()->send($this->domain, $email);
+        $response = $this->getMailgunClient()->messages()->send($this->domain, $email);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new EmailException("Email couldn't be sent.");
+        }
     }
 }

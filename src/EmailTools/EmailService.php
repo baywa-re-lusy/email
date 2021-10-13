@@ -50,6 +50,7 @@ class EmailService
      * @param string $message
      * @param EmailAttachment[] $attachments
      * @throws Exception
+     * @throws EmailException
      */
     public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void
     {
