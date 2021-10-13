@@ -11,6 +11,7 @@ jobs:
       - run:
           name: Composer install
           command: |
+            curl -sS https://getcomposer.org/installer | php
             ./composer.phar install -n
       - run:
           name: PHPStan
