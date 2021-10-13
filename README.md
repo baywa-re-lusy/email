@@ -16,9 +16,12 @@ Currently, this library only supports Mailgun. However it uses an Adapter patter
 ```php
 use BayWaReLusy\EmailTools\EmailToolsConfig;
 use BayWaReLusy\EmailTools\EmailTools;
+use BayWaReLusy\EmailTools\EmailService;
 
-$emailToolsConfig = new EmailToolsConfig('mailgun-api-key');
+$emailToolsConfig = new EmailToolsConfig('mailgun-api-key', 'mailgun-domain');
 $emailTools       = new EmailTools($emailToolsConfig);
+$emailService     = $emailTools->get(EmailService::class);
+$emailService->setAdapter($emailTools->get(MailgunAdapter::class));
 ```
 
 Optionally, you can include then the Email Client into your Service Manager:
