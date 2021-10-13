@@ -45,7 +45,7 @@ class EmailService
     /**
      * Send a message.
      *
-     * @param array $to
+     * @param string[] $to
      * @param string $subject
      * @param string $message
      * @throws Exception
