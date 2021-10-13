@@ -7,6 +7,7 @@ jobs:
         auth:
           username: ppaulis
           password: $DOCKERHUB_PASSWORD
+    working_directory: /var/www/html
     steps:
       - run:
           name: Composer install
