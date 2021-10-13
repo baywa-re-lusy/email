@@ -18,7 +18,7 @@ use BayWaReLusy\EmailTools\EmailToolsConfig;
 use BayWaReLusy\EmailTools\EmailTools;
 use BayWaReLusy\EmailTools\EmailService;
 
-$emailToolsConfig = new EmailToolsConfig('mailgun-api-key', 'mailgun-domain');
+$emailToolsConfig = new EmailToolsConfig('mailgun-api-key', 'mailgun-domain', 'https://api.eu.mailgun.net/');
 $emailTools       = new EmailTools($emailToolsConfig);
 $emailService     = $emailTools->get(EmailService::class);
 $emailService->setAdapter($emailTools->get(MailgunAdapter::class));
