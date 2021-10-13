@@ -9,6 +9,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     working_directory: /var/www/html
     steps:
+      - checkout
       - run:
           name: Composer install
           command: |
