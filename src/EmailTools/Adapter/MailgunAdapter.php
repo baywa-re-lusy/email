@@ -28,22 +28,25 @@ class MailgunAdapter implements EmailAdapterInterface
 {
     protected string $apiKey;
     protected string $domain;
+    protected string $endpoint;
     protected ?Mailgun $mailgunClient = null;
 
     /**
      * @param string $apiKey Mailgun API Key
      * @param string $domain Mailgun Domain
+     * @param string $endpoint Mailgun Endpoint
      */
-    public function __construct(string $apiKey, string $domain)
+    public function __construct(string $apiKey, string $domain, string $endpoint)
     {
-        $this->apiKey = $apiKey;
-        $this->domain = $domain;
+        $this->apiKey   = $apiKey;
+        $this->domain   = $domain;
+        $this->endpoint = $endpoint;
     }
 
     protected function getMailgunClient(): Mailgun
     {
         if (!$this->mailgunClient) {
-            $this->mailgunClient = Mailgun::create($this->apiKey, 'https://api.eu.mailgun.net');
+            $this->mailgunClient = Mailgun::create($this->apiKey, $this->endpoint);
         }
         return $this->mailgunClient;
     }

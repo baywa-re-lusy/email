@@ -35,6 +35,10 @@ class MailgunAdapterFactory implements FactoryInterface
         /** @var EmailToolsConfig $config */
         $config = $container->get(EmailToolsConfig::class);
 
-        return new MailgunAdapter($config->getMailgunApiKey(), $config->getMailgunDomain());
+        return new MailgunAdapter(
+            $config->getMailgunApiKey(),
+            $config->getMailgunDomain(),
+            $config->getMailgunEndpoint()
+        );
     }
 }

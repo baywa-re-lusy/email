@@ -27,15 +27,18 @@ class EmailToolsConfig
 {
     protected string $mailgunApiKey;
     protected string $mailgunDomain;
+    protected string $mailgunEndpoint;
 
     /**
      * @param string $mailgunApiKey
      * @param string $mailgunDomain
+     * @param string $mailgunEndpoint
      */
-    public function __construct(string $mailgunApiKey, string $mailgunDomain)
+    public function __construct(string $mailgunApiKey, string $mailgunDomain, string $mailgunEndpoint)
     {
-        $this->mailgunApiKey = $mailgunApiKey;
-        $this->mailgunDomain = $mailgunDomain;
+        $this->mailgunApiKey   = $mailgunApiKey;
+        $this->mailgunDomain   = $mailgunDomain;
+        $this->mailgunEndpoint = $mailgunEndpoint;
     }
 
     /**
@@ -52,5 +55,13 @@ class EmailToolsConfig
     public function getMailgunDomain(): string
     {
         return $this->mailgunDomain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMailgunEndpoint(): string
+    {
+        return $this->mailgunEndpoint;
     }
 }
