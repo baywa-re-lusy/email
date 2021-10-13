@@ -13,7 +13,6 @@
 
 namespace BayWaReLusy\EmailTools\Adapter;
 
-use BayWaReLusy\EmailTools\EmailAttachment;
 use BayWaReLusy\EmailTools\EmailException;
 use Mailgun\Mailgun;
 
@@ -58,31 +57,31 @@ class MailgunAdapter implements EmailAdapterInterface
      */
     public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void
     {
-        $email =
-            [
-                'from'    => 'no-reply@' . $this->domain,
-                'to'      => $to,
-                'subject' => $subject,
-                'text'    => $message,
-            ];
-
-        $mailgunAttachments = [];
-
-        foreach ($attachments as $attachment) {
-            $mailgunAttachments[] =
+        try {
+            $email =
                 [
-                    'fileContent' => $attachment->getData(),
-                    'filename'    => $attachment->getFilename()
+                    'from' => 'no-reply@' . $this->domain,
+                    'to' => $to,
+                    'subject' => $subject,
+                    'text' => $message,
                 ];
-        }
 
-        if (!empty($mailgunAttachments)) {
-            $email['attachment'] = $mailgunAttachments;
-        }
+            $mailgunAttachments = [];
 
-        $response = $this->getMailgunClient()->messages()->send($this->domain, $email);
+            foreach ($attachments as $attachment) {
+                $mailgunAttachments[] =
+                    [
+                        'fileContent' => $attachment->getData(),
+                        'filename'    => $attachment->getFilename()
+                    ];
+            }
 
-        if ($response->getStatusCode() !== 200) {
+            if (!empty($mailgunAttachments)) {
+                $email['attachment'] = $mailgunAttachments;
+            }
+
+            $this->getMailgunClient()->messages()->send($this->domain, $email);
+        } catch (\Throwable $e) {
             throw new EmailException("Email couldn't be sent.");
         }
     }
