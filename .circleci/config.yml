@@ -23,6 +23,10 @@ jobs:
           command: |
             mkdir -p results/PHPCS
             vendor/bin/phpcs module
+      - store_test_results:
+          path: results
+      - store_artifacts:
+          path: results
 
 workflows:
   version: 2
