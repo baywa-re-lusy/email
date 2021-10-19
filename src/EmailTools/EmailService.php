@@ -49,15 +49,21 @@ class EmailService
      * @param string $subject
      * @param string $message
      * @param EmailAttachment[] $attachments
+     * @param string[] $cc
      * @throws Exception
      * @throws EmailException
      */
-    public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void
-    {
+    public function sendMessage(
+        array $to,
+        string $subject,
+        string $message,
+        array $attachments = [],
+        array $cc = []
+    ): void {
         if (!$this->adapter) {
             throw new Exception('Adapter not set.');
         }
 
-        $this->adapter->sendMessage($to, $subject, $message, $attachments);
+        $this->adapter->sendMessage($to, $subject, $message, $attachments, $cc);
     }
 }

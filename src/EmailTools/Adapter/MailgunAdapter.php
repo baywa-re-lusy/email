@@ -55,16 +55,25 @@ class MailgunAdapter implements EmailAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void
-    {
+    public function sendMessage(
+        array $to,
+        string $subject,
+        string $message,
+        array $attachments = [],
+        array $cc = []
+    ): void {
         try {
             $email =
                 [
-                    'from' => 'no-reply@' . $this->domain,
-                    'to' => $to,
+                    'from'    => 'no-reply@' . $this->domain,
+                    'to'      => $to,
                     'subject' => $subject,
-                    'text' => $message,
+                    'text'    => $message,
                 ];
+
+            if (!empty($cc)) {
+                $email['cc'] = $cc;
+            }
 
             $mailgunAttachments = [];
 

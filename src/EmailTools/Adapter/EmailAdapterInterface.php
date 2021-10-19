@@ -35,7 +35,14 @@ interface EmailAdapterInterface
      * @param string $subject
      * @param string $message
      * @param EmailAttachment[] $attachments
+     * @param string[] $cc
      * @throws EmailException
      */
-    public function sendMessage(array $to, string $subject, string $message, array $attachments = []): void;
+    public function sendMessage(
+        array $to,
+        string $subject,
+        string $message,
+        array $attachments = [],
+        array $cc = []
+    ): void;
 }
