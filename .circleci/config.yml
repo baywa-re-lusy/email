@@ -18,7 +18,7 @@ jobs:
           name: PHPStan
           command: |
             mkdir -p results/PHPStan
-            php -d memory_limit=4G vendor/bin/phpstan analyze src --level 7 --error-format=junit > results/PHPStan/result.xml; php -d memory_limit=4G vendor/bin/phpstan analyze src --level 7
+            php -d memory_limit=4G vendor/bin/phpstan analyze --error-format=junit > results/PHPStan/result.xml; php -d memory_limit=4G vendor/bin/phpstan analyze
       - run:
           name: PHPCS
           command: |
