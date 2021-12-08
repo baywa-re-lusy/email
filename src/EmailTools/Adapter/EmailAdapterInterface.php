@@ -36,6 +36,7 @@ interface EmailAdapterInterface
      * @param string $message
      * @param EmailAttachment[] $attachments
      * @param string[] $cc
+     * @param bool $sendAsHtml
      * @throws EmailException
      */
     public function sendMessage(
@@ -43,6 +44,7 @@ interface EmailAdapterInterface
         string $subject,
         string $message,
         array $attachments = [],
-        array $cc = []
+        array $cc = [],
+        bool $sendAsHtml = false
     ): void;
 }

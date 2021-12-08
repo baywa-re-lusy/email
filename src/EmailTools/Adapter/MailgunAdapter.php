@@ -60,7 +60,8 @@ class MailgunAdapter implements EmailAdapterInterface
         string $subject,
         string $message,
         array $attachments = [],
-        array $cc = []
+        array $cc = [],
+        bool $sendAsHtml = false
     ): void {
         try {
             $email =
@@ -68,8 +69,13 @@ class MailgunAdapter implements EmailAdapterInterface
                     'from'    => 'no-reply@' . $this->domain,
                     'to'      => $to,
                     'subject' => $subject,
-                    'text'    => $message,
                 ];
+
+            if ($sendAsHtml) {
+                $email['html'] = $message;
+            } else {
+                $email['text'] = $message;
+            }
 
             if (!empty($cc)) {
                 $email['cc'] = $cc;

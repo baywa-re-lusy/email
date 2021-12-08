@@ -50,6 +50,7 @@ class EmailService
      * @param string $message
      * @param EmailAttachment[] $attachments
      * @param string[] $cc
+     * @param bool $sendAsHtml
      * @throws Exception
      * @throws EmailException
      */
@@ -58,12 +59,13 @@ class EmailService
         string $subject,
         string $message,
         array $attachments = [],
-        array $cc = []
+        array $cc = [],
+        bool $sendAsHtml = false
     ): void {
         if (!$this->adapter) {
             throw new Exception('Adapter not set.');
         }
 
-        $this->adapter->sendMessage($to, $subject, $message, $attachments, $cc);
+        $this->adapter->sendMessage($to, $subject, $message, $attachments, $cc, $sendAsHtml);
     }
 }
