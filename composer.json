@@ -5,7 +5,7 @@
     "license": "proprietary",
     "homepage": "https://github.com/baywa-re-lusy/email",
     "require": {
-        "php": ">=7.4",
+        "php": ">= 7.4 || >=8.0",
         "laminas/laminas-servicemanager": "^3.6",
         "mailgun/mailgun-php": "^3.5",
         "nyholm/psr7": "^1.4"
