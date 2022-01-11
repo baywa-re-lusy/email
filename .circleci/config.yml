@@ -3,10 +3,10 @@ version: 2.1
 jobs:
   static:
     docker:
-      - image: lusy/alpine-php:latest
+      - image: ${ACR_HOSTNAME_PD}/alpine-php8:latest
         auth:
-          username: ppaulis
-          password: $DOCKERHUB_PASSWORD
+          username: ${ACR_LOGIN_PD}
+          password: ${ACR_PASSWORD_PD}
     working_directory: /var/www/html
     steps:
       - checkout
