@@ -5,7 +5,7 @@ BayWa r.e. Email Tools
 
 ## Installation
 
-To install the Email tools, you will need to be using [Composer](http://getcomposer.org/) in your project:
+To install the Email tools, you will need [Composer](http://getcomposer.org/) in your project:
 
 ```bash
 composer require baywa-re-lusy/email
