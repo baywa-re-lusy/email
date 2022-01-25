@@ -1,6 +1,8 @@
 BayWa r.e. Email Tools
 ======================
 
+[![CircleCI](https://circleci.com/gh/baywa-re-lusy/email/tree/main.svg?style=svg)](https://circleci.com/gh/baywa-re-lusy/email/tree/main)
+
 ## Installation
 
 To install the Email tools, you will need to be using [Composer](http://getcomposer.org/) in your project:
