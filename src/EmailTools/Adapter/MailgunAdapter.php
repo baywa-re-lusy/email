@@ -74,7 +74,6 @@ class MailgunAdapter implements EmailAdapterInterface
                     'subject' => $subject,
                 ];
 
-            //we can only have html or template set at the same time
             if ($sendAsHtml && $template == null) {
                 $email['html'] = $message;
             } else {
@@ -101,9 +100,10 @@ class MailgunAdapter implements EmailAdapterInterface
             if ($template != null) {
                 $email['template'] = $template;
                 if ($variables) {
-                    $email['t:variables'] = $variables;
+                    $email['h:X-Mailgun-Variables'] = json_encode($variables);
                 }
             }
+            error_log($email['h:X-Mailgun-Variables']);
             $this->getMailgunClient()->messages()->send($this->domain, $email);
         } catch (\Throwable $e) {
             error_log($e->getMessage());
