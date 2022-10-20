@@ -48,6 +48,8 @@ class EmailService
      * @param string[] $to
      * @param string $subject
      * @param string $message
+     * @param string | null $template
+     * @param string[] $variables
      * @param EmailAttachment[] $attachments
      * @param string[] $cc
      * @param bool $sendAsHtml
