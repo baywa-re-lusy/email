@@ -66,7 +66,6 @@ class MailgunAdapter implements EmailAdapterInterface
         bool $sendAsHtml = false
     ): void {
         try {
-            error_log($message);
             $email =
                 [
                     'from'    => 'no-reply@' . $this->domain,
@@ -103,7 +102,6 @@ class MailgunAdapter implements EmailAdapterInterface
                     $email['h:X-Mailgun-Variables'] = json_encode($variables);
                 }
             }
-            error_log($email['h:X-Mailgun-Variables']);
             $this->getMailgunClient()->messages()->send($this->domain, $email);
         } catch (\Throwable $e) {
             error_log($e->getMessage());
