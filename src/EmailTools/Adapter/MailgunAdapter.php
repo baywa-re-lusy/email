@@ -59,6 +59,8 @@ class MailgunAdapter implements EmailAdapterInterface
         array $to,
         string $subject,
         string $message,
+        ?string $template = null,
+        array $variables = [],
         array $attachments = [],
         array $cc = [],
         bool $sendAsHtml = false
@@ -71,18 +73,21 @@ class MailgunAdapter implements EmailAdapterInterface
                     'subject' => $subject,
                 ];
 
-            if ($sendAsHtml) {
+            if ($sendAsHtml && $template == null) {
                 $email['html'] = $message;
+            } elseif ($template !== null) {
+                $email['template'] = $template;
+                if ($variables) {
+                    $email['h:X-Mailgun-Variables'] = json_encode($variables);
+                }
             } else {
                 $email['text'] = $message;
             }
-
             if (!empty($cc)) {
                 $email['cc'] = $cc;
             }
 
             $mailgunAttachments = [];
-
             foreach ($attachments as $attachment) {
                 $mailgunAttachments[] =
                     [
@@ -94,7 +99,6 @@ class MailgunAdapter implements EmailAdapterInterface
             if (!empty($mailgunAttachments)) {
                 $email['attachment'] = $mailgunAttachments;
             }
-
             $this->getMailgunClient()->messages()->send($this->domain, $email);
         } catch (\Throwable $e) {
             throw new EmailException("Email couldn't be sent.");
