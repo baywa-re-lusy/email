@@ -104,7 +104,6 @@ class MailgunAdapter implements EmailAdapterInterface
             }
             $this->getMailgunClient()->messages()->send($this->domain, $email);
         } catch (\Throwable $e) {
-            error_log($e->getMessage());
             throw new EmailException("Email couldn't be sent.");
         }
     }
