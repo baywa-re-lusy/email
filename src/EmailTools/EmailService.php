@@ -58,6 +58,8 @@ class EmailService
         array $to,
         string $subject,
         string $message,
+        ?string $template = null,
+        array $variables = [],
         array $attachments = [],
         array $cc = [],
         bool $sendAsHtml = false
@@ -66,6 +68,6 @@ class EmailService
             throw new Exception('Adapter not set.');
         }
 
-        $this->adapter->sendMessage($to, $subject, $message, $attachments, $cc, $sendAsHtml);
+        $this->adapter->sendMessage($to, $subject, $message, $template, $variables, $attachments, $cc, $sendAsHtml);
     }
 }

@@ -59,11 +59,14 @@ class MailgunAdapter implements EmailAdapterInterface
         array $to,
         string $subject,
         string $message,
+        ?string $template = null,
+        array $variables = [],
         array $attachments = [],
         array $cc = [],
         bool $sendAsHtml = false
     ): void {
         try {
+            error_log($message);
             $email =
                 [
                     'from'    => 'no-reply@' . $this->domain,
@@ -71,7 +74,8 @@ class MailgunAdapter implements EmailAdapterInterface
                     'subject' => $subject,
                 ];
 
-            if ($sendAsHtml) {
+            //we can only have html or template set at the same time
+            if ($sendAsHtml && $template == null) {
                 $email['html'] = $message;
             } else {
                 $email['text'] = $message;
@@ -94,9 +98,15 @@ class MailgunAdapter implements EmailAdapterInterface
             if (!empty($mailgunAttachments)) {
                 $email['attachment'] = $mailgunAttachments;
             }
-
+            if ($template != null) {
+                $email['template'] = $template;
+                if ($variables) {
+                    $email['t:variables'] = $variables;
+                }
+            }
             $this->getMailgunClient()->messages()->send($this->domain, $email);
         } catch (\Throwable $e) {
+            error_log($e->getMessage());
             throw new EmailException("Email couldn't be sent.");
         }
     }

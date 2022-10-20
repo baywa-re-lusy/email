@@ -43,6 +43,8 @@ interface EmailAdapterInterface
         array $to,
         string $subject,
         string $message,
+        ?string $template = null,
+        array $variables = [],
         array $attachments = [],
         array $cc = [],
         bool $sendAsHtml = false
