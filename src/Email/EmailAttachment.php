@@ -11,7 +11,7 @@
  *            prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\EmailTools;
+namespace BayWaReLusy\Email;
 
 class EmailAttachment
 {

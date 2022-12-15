@@ -11,16 +11,16 @@
  *            prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\EmailTools;
+namespace BayWaReLusy\Email;
 
-use BayWaReLusy\EmailTools\Adapter\EmailAdapterInterface;
+use BayWaReLusy\Email\Adapter\EmailAdapterInterface;
 use Exception;
 
 /**
  * Class EmailService
  *
  * @package     BayWaReLusy
- * @subpackage  EmailTools
+ * @subpackage  Email
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly
@@ -28,19 +28,13 @@ use Exception;
  */
 class EmailService
 {
-    protected ?EmailAdapterInterface $adapter = null;
-
     /**
-     * Set the adapter.
-     *
      * @param EmailAdapterInterface $adapter
-     * @return $this Provides a fluent interface.
      */
-    public function setAdapter(EmailAdapterInterface $adapter): EmailService
+    public function __construct(protected EmailAdapterInterface $adapter)
     {
-        $this->adapter = $adapter;
-        return $this;
     }
+
 
     /**
      * Send a message.
@@ -66,10 +60,6 @@ class EmailService
         array $cc = [],
         bool $sendAsHtml = false
     ): void {
-        if (!$this->adapter) {
-            throw new Exception('Adapter not set.');
-        }
-
         $this->adapter->sendMessage($to, $subject, $message, $template, $variables, $attachments, $cc, $sendAsHtml);
     }
 }
