@@ -8,7 +8,6 @@
         "php": ">= 8.1",
         "mailgun/mailgun-php": "^3.5",
         "nyholm/psr7": "^1.4",
-        "sendgrid/sendgrid": "^8.0",
         "aws/aws-sdk-php": "^3.253"
     },
     "require-dev": {
