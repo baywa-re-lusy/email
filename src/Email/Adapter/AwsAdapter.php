@@ -47,7 +47,7 @@ class AwsAdapter implements EmailAdapterInterface
     {
         if (!$this->sesClient) {
             $this->sesClient = new SesClient([
-                //'profile'     => 'default',
+                'profile'     => 'default',
                 'version'     => '2010-12-01',
                 'region'      => $this->awsRegion,
                 'credentials' =>
@@ -75,7 +75,12 @@ class AwsAdapter implements EmailAdapterInterface
     ): void {
         try {
             $this->sesClient->sendEmail([
-                'Destination'      => ['ToAddresses' => $to,],
+                'Destination' =>
+                    [
+                        'ToAddresses' => $to,
+                        'CcAddresses' => $cc,
+
+                    ],
                 'ReplyToAddresses' => ['no-reply@' . $this->domain],
                 'Source'           => 'no-reply@' . $this->domain,
                 'Message' =>

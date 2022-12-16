@@ -24,11 +24,11 @@ $adapter      = new MailgunAdapter('mailgun-api-key', 'mailgun-domain', 'https:/
 $emailService = new EmailService($adapter);
 ```
 
-### Twilio SendGrid
+### AWS SES
 ```php
-use BayWaReLusy\Email\Adapter\SendgridAdapter;
+use BayWaReLusy\Email\Adapter\AwsAdapter;
 use BayWaReLusy\Email\EmailService;
 
-$adapter      = new SendgridAdapter('sendgrid-api-key', 'sendgrid-domain');
+$adapter      = new AwsAdapter('aws-key', 'aws-secret', 'aws-region', 'domain');
 $emailService = new EmailService($adapter);
 ```
