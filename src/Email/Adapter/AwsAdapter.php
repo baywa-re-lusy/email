@@ -74,7 +74,7 @@ class AwsAdapter implements EmailAdapterInterface
         bool $sendAsHtml = false
     ): void {
         try {
-            $this->sesClient->sendEmail([
+            $this->getSesClient()->sendEmail([
                 'Destination' =>
                     [
                         'ToAddresses' => $to,
