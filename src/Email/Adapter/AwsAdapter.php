@@ -47,7 +47,6 @@ class AwsAdapter implements EmailAdapterInterface
     {
         if (!$this->sesClient) {
             $this->sesClient = new SesClient([
-                'profile'     => 'default',
                 'version'     => '2010-12-01',
                 'region'      => $this->awsRegion,
                 'credentials' =>
