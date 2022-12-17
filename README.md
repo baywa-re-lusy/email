@@ -13,21 +13,22 @@ composer require baywa-re-lusy/email
 
 ## Usage
 
-Currently, this library only supports Mailgun. However it uses an Adapter pattern to allow adding other vendors easily.
+Currently, this library supports MailGun and SendGrid.
 
+### MailGun
 ```php
-use BayWaReLusy\EmailTools\EmailToolsConfig;
-use BayWaReLusy\EmailTools\EmailTools;
-use BayWaReLusy\EmailTools\EmailService;
+use BayWaReLusy\Email\Adapter\MailgunAdapter;
+use BayWaReLusy\Email\EmailService;
 
-$emailToolsConfig = new EmailToolsConfig('mailgun-api-key', 'mailgun-domain', 'https://api.eu.mailgun.net/');
-$emailTools       = new EmailTools($emailToolsConfig);
-$emailService     = $emailTools->get(EmailService::class);
-$emailService->setAdapter($emailTools->get(MailgunAdapter::class));
+$adapter      = new MailgunAdapter('mailgun-api-key', 'mailgun-domain', 'https://api.eu.mailgun.net/');
+$emailService = new EmailService($adapter);
 ```
 
-Optionally, you can include then the Email Client into your Service Manager:
-
+### AWS SES
 ```php
-$sm->setService(EmailTools::class, $emailTools);
+use BayWaReLusy\Email\Adapter\AwsAdapter;
+use BayWaReLusy\Email\EmailService;
+
+$adapter      = new AwsAdapter('aws-key', 'aws-secret', 'aws-region', 'domain');
+$emailService = new EmailService($adapter);
 ```

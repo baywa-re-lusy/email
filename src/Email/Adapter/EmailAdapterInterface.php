@@ -11,16 +11,16 @@
  *            prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\EmailTools\Adapter;
+namespace BayWaReLusy\Email\Adapter;
 
-use BayWaReLusy\EmailTools\EmailAttachment;
-use BayWaReLusy\EmailTools\EmailException;
+use BayWaReLusy\Email\EmailAttachment;
+use BayWaReLusy\Email\EmailException;
 
 /**
  * EmailAdapterInterface
  *
  * @package     BayWaReLusy
- * @subpackage  EmailTools
+ * @subpackage  Email
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly

@@ -11,9 +11,9 @@
  *            prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\EmailTools\Adapter;
+namespace BayWaReLusy\Email\Adapter;
 
-use BayWaReLusy\EmailTools\EmailException;
+use BayWaReLusy\Email\EmailException;
 use Mailgun\Mailgun;
 
 /**
@@ -27,9 +27,6 @@ use Mailgun\Mailgun;
  */
 class MailgunAdapter implements EmailAdapterInterface
 {
-    protected string $apiKey;
-    protected string $domain;
-    protected string $endpoint;
     protected ?Mailgun $mailgunClient = null;
 
     /**
@@ -37,11 +34,11 @@ class MailgunAdapter implements EmailAdapterInterface
      * @param string $domain Mailgun Domain
      * @param string $endpoint Mailgun Endpoint
      */
-    public function __construct(string $apiKey, string $domain, string $endpoint)
-    {
-        $this->apiKey   = $apiKey;
-        $this->domain   = $domain;
-        $this->endpoint = $endpoint;
+    public function __construct(
+        protected string $apiKey,
+        protected string $domain,
+        protected string $endpoint
+    ) {
     }
 
     protected function getMailgunClient(): Mailgun
@@ -101,6 +98,8 @@ class MailgunAdapter implements EmailAdapterInterface
             }
             $this->getMailgunClient()->messages()->send($this->domain, $email);
         } catch (\Throwable $e) {
+            error_log($e->getMessage());
+            error_log($e->getTraceAsString());
             throw new EmailException("Email couldn't be sent.");
         }
     }
