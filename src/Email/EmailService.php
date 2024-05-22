@@ -72,6 +72,6 @@ class EmailService
         array $cc = [],
         bool $sendAsHtml = false
     ): void {
-        $this->adapter->sendMessage($to, $subject, $this->subjectPrefix . $message, $template, $variables, $attachments, $cc, $sendAsHtml);
+        $this->adapter->sendMessage($to, $this->subjectPrefix . $subject, $message, $template, $variables, $attachments, $cc, $sendAsHtml);
     }
 }
