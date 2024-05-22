@@ -28,11 +28,23 @@ use Exception;
  */
 class EmailService
 {
+    private string $subjectPrefix = '';
+
     /**
      * @param EmailAdapterInterface $adapter
      */
     public function __construct(protected EmailAdapterInterface $adapter)
     {
+    }
+
+    /**
+     * Sets an additional subject prefix to mark staging/testing environments for example
+     * @param string $subjectPrefix
+     * @return void
+     */
+    public function setSubjectPrefix(string $subjectPrefix): void
+    {
+        $this->subjectPrefix = $subjectPrefix;
     }
 
 
@@ -60,6 +72,6 @@ class EmailService
         array $cc = [],
         bool $sendAsHtml = false
     ): void {
-        $this->adapter->sendMessage($to, $subject, $message, $template, $variables, $attachments, $cc, $sendAsHtml);
+        $this->adapter->sendMessage($to, $subject, $this->subjectPrefix . $message, $template, $variables, $attachments, $cc, $sendAsHtml);
     }
 }
