@@ -18,5 +18,10 @@
         "psr-4": {
             "BayWaReLusy\\Email\\": "src/Email"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }
