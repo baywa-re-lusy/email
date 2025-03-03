@@ -1,0 +1,95 @@
+<?php
+
+namespace BayWaReLusy\Email\Test;
+
+use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\TableNode;
+
+class EmailContext implements Context
+{
+    /**
+     * @Then the following email should have been sent:
+     */
+    public function theEmailContentShouldMatch(TableNode $table)
+    {
+        /** @var EmailMessage[] $emails */
+        $emails = [];
+
+        foreach (file(sys_get_temp_dir() . '/sent-emails') as $serializedEmail) {
+            $emails[] = unserialize(base64_decode($serializedEmail));
+        }
+
+        $found = false;
+
+        foreach ($emails as $email) {
+            $recipientsMatch  = false;
+            $subjectMatch     = false;
+            $attachmentsMatch = false;
+
+            foreach ($table->getRows() as $property) {
+                if ($property[0] === 'recipients') {
+                    $recipients = explode(',', $property[1]);
+                    $messageRecipients = $email->getRecipients();
+
+                    sort($recipients);
+                    sort($messageRecipients);
+
+                    if ($recipients === $messageRecipients) {
+                        $recipientsMatch = true;
+                    }
+                } elseif ($property[0] === 'subject') {
+                    if ($property[1] === $email->getSubject()) {
+                        $subjectMatch = true;
+                    }
+                } elseif ($property[0] === 'attachments') {
+                    $attachments = explode(',', $property[1]);
+                    $messageAttachments = [];
+
+                    foreach ($email->getAttachments() as $attachment) {
+                        $messageAttachments[] = $attachment->getFilename();
+                    }
+
+                    sort($attachments);
+                    sort($messageAttachments);
+
+                    if ($attachments === $messageAttachments) {
+                        $attachmentsMatch = true;
+                    }
+                }
+            }
+
+            if ($recipientsMatch && $attachmentsMatch && $subjectMatch) {
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            throw new \Exception("Didn't find a matching email.");
+        }
+    }
+
+    /**
+     * @Then exactly :emailCount emails should have been sent
+     */
+    public function exactlyEmailsShouldHaveBeenSent(int $emailCount)
+    {
+        $emails = file(sys_get_temp_dir() . '/sent-emails');
+
+        if (count($emails) !== $emailCount) {
+            throw new \Exception(sprintf('Expected %d emails, got %d.', $emailCount, count($emails)));
+        }
+    }
+
+    /**
+     * @Then no email should have been sent
+     */
+    public function noEmailShouldHaveBeenSent(): void
+    {
+        $fileName = sys_get_temp_dir() . '/sent-emails';
+
+        if (file_exists($fileName) && !empty(file($fileName))) {
+            throw new \Exception('No email should have been sent.');
+        }
+    }
+}
