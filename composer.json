@@ -17,7 +17,11 @@
     },
     "autoload": {
         "psr-4": {
-            "BayWaReLusy\\Email\\": "src/Email",
+            "BayWaReLusy\\Email\\": "src/Email"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "BayWaReLusy\\Email\\Test\\": "tests"
         }
     },
