@@ -12,6 +12,10 @@ class EmailContext implements Context
      */
     public function theEmailContentShouldMatch(TableNode $table): void
     {
+        if (!file_exists(EmailService::getTempEmailStorageFile())) {
+            throw new \Exception('No emails have been sent.');
+        }
+
         /** @var EmailMessage[] $emails */
         $emails = [];
 
