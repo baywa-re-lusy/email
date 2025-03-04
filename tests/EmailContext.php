@@ -7,6 +7,13 @@ use Behat\Gherkin\Node\TableNode;
 
 class EmailContext implements Context
 {
+    public function purgeEmails(): void
+    {
+        if (file_exists(EmailService::getTempEmailStorageFile())) {
+            unlink(EmailService::getTempEmailStorageFile());
+        }
+    }
+
     /**
      * @Then the following email should have been sent:
      */
