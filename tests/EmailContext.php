@@ -10,12 +10,12 @@ class EmailContext implements Context
     /**
      * @Then the following email should have been sent:
      */
-    public function theEmailContentShouldMatch(TableNode $table)
+    public function theEmailContentShouldMatch(TableNode $table): void
     {
         /** @var EmailMessage[] $emails */
         $emails = [];
 
-        foreach (file(sys_get_temp_dir() . '/sent-emails') as $serializedEmail) {
+        foreach (file(EmailService::getTempEmailStorageFile()) as $serializedEmail) {
             $emails[] = unserialize(base64_decode($serializedEmail));
         }
 
@@ -72,9 +72,13 @@ class EmailContext implements Context
     /**
      * @Then exactly :emailCount emails should have been sent
      */
-    public function exactlyEmailsShouldHaveBeenSent(int $emailCount)
+    public function exactlyEmailsShouldHaveBeenSent(int $emailCount): void
     {
-        $emails = file(sys_get_temp_dir() . '/sent-emails');
+        $emails = file(EmailService::getTempEmailStorageFile());
+
+        if (!is_array($emails)) {
+            throw new \Exception('No emails found.');
+        }
 
         if (count($emails) !== $emailCount) {
             throw new \Exception(sprintf('Expected %d emails, got %d.', $emailCount, count($emails)));
@@ -86,9 +90,10 @@ class EmailContext implements Context
      */
     public function noEmailShouldHaveBeenSent(): void
     {
-        $fileName = sys_get_temp_dir() . '/sent-emails';
-
-        if (file_exists($fileName) && !empty(file($fileName))) {
+        if (
+            file_exists(EmailService::getTempEmailStorageFile()) &&
+            !empty(file(EmailService::getTempEmailStorageFile()))
+        ) {
             throw new \Exception('No email should have been sent.');
         }
     }

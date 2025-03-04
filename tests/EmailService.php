@@ -8,6 +8,11 @@ class EmailService extends \BayWaReLusy\Email\EmailService
     {
     }
 
+    public static function getTempEmailStorageFile(): string
+    {
+        return sys_get_temp_dir() . '/sent-emails';
+    }
+
     public function sendMessage(
         array $to,
         string $subject,
@@ -25,7 +30,7 @@ class EmailService extends \BayWaReLusy\Email\EmailService
             ->setSubject($subject);
 
         file_put_contents(
-            sys_get_temp_dir() . '/sent-emails',
+            self::getTempEmailStorageFile(),
             base64_encode(serialize($message)) . "\n",
             FILE_APPEND
         );
