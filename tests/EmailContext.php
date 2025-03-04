@@ -7,6 +7,10 @@ use Behat\Gherkin\Node\TableNode;
 
 class EmailContext implements Context
 {
+    /**
+     * Remove all sent emails. Can be used in a BeforeScenario step.
+     * @return void
+     */
     public function purgeEmails(): void
     {
         if (file_exists(EmailService::getTempEmailStorageFile())) {
