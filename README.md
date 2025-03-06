@@ -32,3 +32,35 @@ use BayWaReLusy\Email\EmailService;
 $adapter      = new AwsAdapter('aws-key', 'aws-secret', 'aws-region', 'domain');
 $emailService = new EmailService($adapter);
 ```
+
+## Tests
+
+The avoid sending emails during acceptance tests, but to still test that emails are sent, there is a mock EmailService
+(which inherits from the real EmailService) and an Email context.
+
+To use the mock EmailService, you can replace the original EmailService in testing mode (e.g. in `Module.php`) :
+
+```php
+if (getenv('ENV') === 'testing') {
+    $config->merge(new Config(include __DIR__ . '/../../../tests/mocks.config.php'));
+}
+```
+
+And in `mocks.config.php` :
+
+```php
+<?php
+
+return
+    [
+        'service_manager' =>
+            [
+                'invokables' =>
+                    [
+                        \BayWaReLusy\Email\EmailService::class => \BayWaReLusy\Email\Test\EmailService::class,
+                    ],
+                    ...
+            ],
+    ];
+
+```
