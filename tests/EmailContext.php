@@ -53,7 +53,7 @@ class EmailContext implements Context
                         $recipientsMatch = true;
                     }
                 } elseif ($property[0] === 'subject') {
-                    if ($property[1] === $email->getSubject()) {
+                    if (preg_match('/^' . $property[1] . '$/', $email->getSubject())) {
                         $subjectMatch = true;
                     }
                 } elseif ($property[0] === 'attachments') {
